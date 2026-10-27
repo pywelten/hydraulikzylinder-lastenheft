@@ -14,12 +14,12 @@ window.LH_DATA = {
  schemaVersion:1, appVersion:'1.0.0', title:'Lastenheft für Zylinderanfragen',
  sourceNote:noteSource,
  cylinderTypes:[
-  {value:'Einfachwirkender Differentialzylinder',short:'Einfachwirkend',desc:'Hydraulisch nur in einer Richtung wirksam. Rückhub durch äußere Kraft.'},
-  {value:'Doppeltwirkender Differentialzylinder',short:'Differential',desc:'Druck- und Ringraum hydraulisch beaufschlagbar.'},
-  {value:'Gleichlaufzylinder',short:'Gleichlauf',desc:'Beidseitige Kolbenstange; gleiche Wirkflächen nur bei gleichen Stangendurchmessern.'},
-  {value:'Plungerzylinder',short:'Plunger',desc:'Eine hydraulisch wirksame Fläche; Rücklauf durch äußere Last.'},
-  {value:'Einfachwirkender Teleskopzylinder',short:'Teleskop, EW',desc:'Mehrstufig; vollständige Stufenabmessungen für Berechnungen erforderlich.'},
-  {value:'Doppeltwirkender Teleskopzylinder',short:'Teleskop, DW',desc:'Mehrstufig; vollständige Stufenabmessungen für Berechnungen erforderlich.'}
+  {value:'Einfachwirkender Differentialzylinder',short:'Einfachwirkend',desc:'Hydraulisch nur in einer Richtung wirksam. Rückhub durch äußere Kraft.',symbol:'assets/illustrations/cyl-ew-diff.png'},
+  {value:'Doppeltwirkender Differentialzylinder',short:'Differential',desc:'Druck- und Ringraum hydraulisch beaufschlagbar.',symbol:'assets/illustrations/cyl-dw-diff.png'},
+  {value:'Gleichlaufzylinder',short:'Gleichlauf',desc:'Beidseitige Kolbenstange; gleiche Wirkflächen nur bei gleichen Stangendurchmessern.',symbol:'assets/illustrations/cyl-gleichlauf.png'},
+  {value:'Plungerzylinder',short:'Plunger',desc:'Eine hydraulisch wirksame Fläche; Rücklauf durch äußere Last.',symbol:'assets/illustrations/cyl-plunger.png'},
+  {value:'Einfachwirkender Teleskopzylinder',short:'Teleskop, EW',desc:'Mehrstufig; vollständige Stufenabmessungen für Berechnungen erforderlich.',symbol:'assets/illustrations/cyl-teleskop-ew.png'},
+  {value:'Doppeltwirkender Teleskopzylinder',short:'Teleskop, DW',desc:'Mehrstufig; vollständige Stufenabmessungen für Berechnungen erforderlich.',symbol:'assets/illustrations/cyl-teleskop-dw.png'}
  ],
  mountsRod:['Nicht festgelegt','Gewinde','Schwenkauge','Gelenklager – verstemmt','Gelenklager – Sicherungsring','Gabelkopf','Sonstige Ausführung'],
  mountsBase:['Nicht festgelegt','Schwenkauge','Gelenklager – verstemmt','Gelenklager – Sicherungsring','Schwenklasche','Schwenkgabel','Schwenkzapfen','Sonstige Ausführung'],
