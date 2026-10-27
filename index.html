@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#132d47">
+<meta name="description" content="Interaktives Hydraulikzylinder-Lastenheft mit technischer Plausibilitätsprüfung, SVG-Zeichnung und druckfähigem Anfrageprotokoll. Alle Daten bleiben lokal.">
+<title>Hydraulikzylinder · Technisches Lastenheft</title>
+<link rel="icon" href="assets/illustrations/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/print.css" media="print">
+<script src="js/data.js" defer></script><script src="js/calculations.js" defer></script><script src="js/validation.js" defer></script><script src="js/storage.js" defer></script><script src="js/app.js" defer></script>
+</head><body>
+<noscript><div class="noscript">Diese Anwendung benötigt JavaScript. Bitte aktiviere JavaScript im Browser.</div></noscript>
+<div id="app" class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Abschnittsnavigation">
+    <div class="sidebar-brand"><div class="logo-mark" aria-hidden="true"><span></span></div><div><strong>HYDRAULIK<span class="brand-highlight">/</span>TECHNIK</strong><small>ENGINEERING WORKSPACE</small></div></div>
+    <div class="sidebar-caption">ANFRAGE KONFIGURIEREN</div>
+    <label class="sr-only" for="sectionSearch">Abschnitt suchen</label><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="sectionSearch" type="search" placeholder="Abschnitt suchen ..." autocomplete="off"></div>
+    <nav id="sectionNav" class="section-nav" aria-label="Lastenheftbereiche"></nav>
+    <div class="sidebar-bottom"><div class="storage-dot"></div><div><strong>Lokal & vertraulich</strong><p>Keine Anmeldung, kein Server. Daten bleiben auf diesem Gerät.</p></div></div>
+  </aside>
+  <div class="main-shell">
+   <header class="topbar">
+    <div class="topbar-left"><button id="menuToggle" class="icon-button menu-button" type="button" aria-label="Navigation öffnen" aria-expanded="false">☰</button><div class="breadcrumb"><span>TECHNISCHE ANFRAGE</span><b>/</b><strong id="currentBreadcrumb">Kräfte & Drücke</strong></div></div>
+    <div class="top-actions"><span id="savedIndicator" class="saved-indicator" aria-live="polite">● Lokal gespeichert</span><button type="button" id="btnExport" class="btn btn-ghost compact">↓ <span>JSON</span></button><button type="button" id="btnPrint" class="btn btn-primary compact">▧ <span>Protokoll / PDF</span></button></div>
+   </header>
+   <main class="workspace" id="mainContent">
+    <div class="overview-header"><div class="eyebrow">KONFIGURATIONS- & ANFRAGESYSTEM <span class="version-pill">V 1.0</span></div><h1>Hydraulikzylinder <span>Lastenheft</span></h1><p>Technische Anforderungen systematisch erfassen, prüfen und dokumentieren.</p></div>
+    <div class="progress-panel"><div class="progress-copy"><div><strong>Bearbeitungsfortschritt</strong><small id="progressCaption">0 von 10 Bereichen vollständig</small></div><strong id="progressPercent">0 %</strong></div><div class="progress-track" role="progressbar" aria-label="Bearbeitungsfortschritt" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><div id="progressBar"></div></div></div>
+    <div class="content-head"><div><div class="eyebrow" id="sectionCounter">SCHRITT 01 / 11</div><h2 id="sectionTitle">Kräfte & Drücke</h2><p id="sectionDesc">Betriebsparameter und erforderliche Kräfte</p></div><div class="head-actions"><button class="btn btn-subtle" id="btnResetSection" type="button">Abschnitt zurücksetzen</button></div></div>
+    <div id="sectionContent" class="section-content"></div>
+    <div class="step-footer"><button class="btn btn-ghost" type="button" id="btnPrevious">← Zurück</button><span id="stepMeta" aria-live="polite"></span><button class="btn btn-primary" type="button" id="btnNext">Weiter →</button></div>
+    <div class="workspace-footer"><span>Hydraulikzylinder-Lastenheft v1.0.0 · Rein lokale Webanwendung</span><span>Technische Freigabe durch Fachpersonal erforderlich</span></div>
+   </main>
+  </div>
+</div>
+<div class="quick-tools" id="quickTools" aria-label="Anfragedaten verwalten"><button type="button" class="btn btn-ghost" id="btnNew">+ Neue Anfrage</button><button type="button" class="btn btn-ghost" id="btnDuplicate">⧉ Duplizieren</button><button type="button" class="btn btn-ghost" id="btnSave">▣ Speichern</button><button type="button" class="btn btn-ghost" id="btnManage">▤ Gespeicherte</button><button type="button" class="btn btn-ghost" id="btnImport">↑ JSON importieren</button><input type="file" id="importFile" accept=".json,application/json" hidden></div>
+<dialog id="saveDialog" aria-labelledby="saveDialogTitle"><form method="dialog" class="dialog-body" id="saveForm"><h2 id="saveDialogTitle">Bearbeitungsstand speichern</h2><p>Lege einen lokalen Speicherpunkt an. Er bleibt nur in diesem Browser verfügbar.</p><label for="saveName">Bezeichnung</label><input id="saveName" type="text" maxlength="100" required placeholder="z. B. Zylinder Anfrage 01"><div class="dialog-actions"><button class="btn btn-ghost" type="button" data-close-dialog="saveDialog">Abbrechen</button><button class="btn btn-primary" value="ok">Speichern</button></div></form></dialog>
+<dialog id="manageDialog" aria-labelledby="manageDialogTitle"><div class="dialog-body"><h2 id="manageDialogTitle">Gespeicherte Anfragen</h2><p>Die Speicherstände sind lokal und nicht geräteübergreifend synchronisiert.</p><div id="savedList" class="saved-list"></div><div class="dialog-actions"><button class="btn btn-ghost" type="button" data-close-dialog="manageDialog">Schließen</button></div></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<div id="printRoot" class="print-root" aria-hidden="true"></div>
+</body></html>
