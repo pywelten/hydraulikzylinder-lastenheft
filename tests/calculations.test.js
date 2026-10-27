@@ -1,0 +1,21 @@
+'use strict';
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('node:assert/strict');
+const ctx={window:{},console,Intl,Math,Date};
+vm.createContext(ctx);
+for(const name of ['data','calculations','validation'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..','js',name+'.js'),'utf8'),ctx);
+const {compute,num}=ctx.window.LH_CALC,validate=ctx.window.LH_VALIDATE.validate,M=ctx.window.LH_DATA;
+function near(a,b,msg){assert.ok(Math.abs(a-b)<1e-5*Math.max(Math.abs(b),1),`${msg}: ${a} != ${b}`);}
+assert.equal(num('1.234,56'),1234.56);assert.equal(num('1,234.56'),1234.56);assert.equal(num('12,5'),12.5);assert.equal(num('unbekannt'),null);
+let d={cylinderType:'Doppeltwirkender Differentialzylinder',pistonDiameter:'100',rodDiameter:'60',stroke:'500',pressure:'200',outSpeed:'0,1',inSpeed:'0,2',efficiency:'90',requiredPush:'90000',forceSafety:'1,5'};
+let r=compute(d);assert.equal(r.supported,true);near(r.pistonArea,Math.PI*2500,'Kolbenfläche');near(r.areaPull,Math.PI*1600,'Ringfläche');near(r.theoreticalPush,157079.632679,'theoretisch aus');near(r.theoreticalPull,100530.964915,'theoretisch ein');near(r.availablePush,141371.669411,'verfügbar');near(r.oilOut,3.926990817,'Volumen aus');near(r.oilIn,2.513274123,'Volumen ein');near(r.flowOut,47.1238898,'Q aus');near(r.flowIn,60.3185789,'Q ein');near(r.hydraulicPowerOut,15.7079633,'P aus');near(r.requiredPushFactored,135000,'Sicherheitsfaktor');near(r.speedRatio,0.5,'Eingegebene Geschwindigkeit aus/ein');near(r.speedRatioEqualFlow,0.64,'Ideal gleicher Volumenstrom');
+assert.equal(validate(d,M).errors.length,0);
+assert.equal(compute({...d,stroke:''}).theoreticalPush, r.theoreticalPush);assert.equal(compute({...d,stroke:''}).oilOut,null);
+let bad={...d,rodDiameter:'100'};assert.equal(compute(bad).supported,false);assert.ok(validate(bad,M).errors.some(x=>x.section==='dimensions'));
+let insufficient={...d,efficiency:'',requiredPush:'180000'};assert.ok(validate(insufficient,M).warnings.some(x=>x.message.includes('theoretische Kraft')));
+let single={...d,cylinderType:'Einfachwirkender Differentialzylinder'};assert.equal(compute(single).theoreticalPull,null);assert.equal(compute(single).oilIn,null);
+let plunger={...d,cylinderType:'Plungerzylinder'};assert.equal(compute(plunger).theoreticalPull,null);
+let telescope={...d,cylinderType:'Doppeltwirkender Teleskopzylinder'};assert.equal(compute(telescope).supported,false);
+let equal={...d,cylinderType:'Gleichlaufzylinder',oppositeRodDiameter:'60'};near(compute(equal).areaPull,compute(equal).areaPush,'Gleichlauf gleiche Fläche');assert.ok(!validate(equal,M).warnings.some(x=>x.message.includes('Ungleiche Stangendurchmesser')));
+equal.oppositeRodDiameter='70';assert.ok(validate(equal,M).warnings.some(x=>x.message.includes('Ungleiche Stangendurchmesser')));
+assert.ok(validate({...d,oilTempMin:'60',oilTempMax:'10'},M).errors.some(x=>x.message.includes('Öltemperatur')));
+console.log('OK: 20+ überprüfte Rechen- und Validierungsbedingungen.');
